@@ -3,18 +3,18 @@
       <el-header style="height:2vh; background-color: gainsboro;" v-if="showHeader">
         <el-row style="border: 0px solid #73ad21; height:100%;">
             <el-col :span="24">
-              <div style="margin-top:4px; text-align: left; padding-left: 2em;"><label style="font-weight: bold;">{{title}}</label></div>
+              <div style="margin-top:4px; text-align: left; padding-left: 2em;"><label style="font-weight: bold; font-size: small;">{{title}}</label></div>
             </el-col>
         </el-row>
         </el-header>
         <el-descriptions title="" :border="true" :column="1" :size="'medium'" style="margin-top:5px; margin-left: 5px; margin-right: 5px; " >
-            <el-descriptions-item label="Model" labelStyle=" text-align: center;background-color: #F8F8FF; font-weight: bold; color: black; width:40%" contentStyle="padding-left: 2.5em">
+            <el-descriptions-item label="Model" labelStyle=" text-align: center;background-color: #F8F8FF; font-weight: bold; color: black; width:40%; font-size:xx-small;" contentStyle="padding-left: 2.5em">
                 <button style="margin-top: -5%; height: 30px;">./SiLSTM.index</button>
             </el-descriptions-item>
-            <el-descriptions-item label="Layer" labelStyle=" text-align: center;background-color: #F8F8FF; font-weight: bold; color: black; width:40%" contentStyle="padding-left: 2em">
-                <label style="margin-top: -5%; height: 30px;font-weight: bold; padding-left: 1em;">{{selectedlayer}}</label>
+            <el-descriptions-item label="Layer" labelStyle=" text-align: center;background-color: #F8F8FF; color: black; width:40%; font-size:xx-small;" contentStyle="padding-left: 2em">
+                <label style="margin-top: -5%; height: 30px;font-weight: bold; padding-left: 1em;font-size:xx-small;">{{selectedlayer}}</label>
             </el-descriptions-item>
-            <el-descriptions-item label="Neurons" labelStyle=" text-align: center;background-color: #F8F8FF; font-weight: bold; color: black; width:40%" contentStyle="padding-left: 2.8em; width:60%">
+            <el-descriptions-item label="Neurons" labelStyle=" text-align: center;background-color: #F8F8FF; font-weight: bold; color: black; width:40%;font-size:xx-small;" contentStyle="padding-left: 2.8em; width:60%">
                 <div class="data-container">
                     <label class="expend-label">{{ selectedNeurons }}</label>
                 </div>

@@ -2,20 +2,20 @@
     <div class="instance" ref="subcontainer">
       <el-header style="height:2vh; background-color: gainsboro;" v-if="showHeader">
         <el-row style="border: 0px solid #73ad21; height:100%;">
-            <el-col :span="9">
-              <div style="margin-top:4px; text-align: left; padding-left: 2em;"><label style="font-weight: bold;">{{title}}</label></div>
+            <el-col :span="11">
+              <div style="margin-top:4px; text-align: left; padding-left: 1.5em;"><label style="font-weight: bold;">{{title}}</label></div>
             </el-col>
-            <el-col :span="13">
+            <el-col :span="10">
             <div style="margin-top:7px">
               <el-radio-group v-model="radio" @change="changeMode">
                 <el-radio :label="1">mode 1</el-radio>
                 <el-radio :label="2">mode 2</el-radio>
               </el-radio-group>
             </div>
-          </el-col>
-          <el-col :span="2">
-            <div style="margin-top:7px"><el-button type="text" style="margin-top:-20px;color:steelblue" @click="checkGraph"><u>switch</u></el-button></div>
-          </el-col>
+            </el-col>
+            <el-col :span="2">
+                <div style="margin-top:7px"><el-button type="text" style="margin-top:-20px;color:steelblue" @click="checkGraph"><u>switch</u></el-button></div>
+            </el-col>
         </el-row>
       </el-header>
       <component :is="this.comName" :show-header="false" :height="(height - 2)" :weightIndex="0"  :modelState="true"></component>

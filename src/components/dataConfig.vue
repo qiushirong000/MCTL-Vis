@@ -3,18 +3,18 @@
         <el-header style="height:2vh; background-color: gainsboro;" v-if="showHeader">
             <el-row style="border: 0px solid #73ad21; height:100%;">
                 <el-col :span="24">
-                <div style="margin-top:4px; text-align: left; padding-left: 2em;"><label style="font-weight: bold;">{{title}}</label></div>
+                <div style="margin-top:4px; text-align: left; padding-left: 2em;"><label style="font-weight: bold; font-size:95%; display: block; ">{{title}}</label></div>
                 </el-col>
             </el-row>
         </el-header>
 
         <div class="chart" ref="chart">
             <el-descriptions title="" :border="true" :column="1" :size="'medium'" style="margin-top:5px; margin-left: 5px; margin-right: 5px; " >
-                <el-descriptions-item label="DataSet" labelStyle=" text-align: center;background-color: #F8F8FF; font-weight: bold; color: black" contentStyle="padding-left: 2em">
+                <el-descriptions-item label="DataSet" labelStyle="font-size:xx-small;text-align: center;background-color: #F8F8FF; font-weight: bold; color: black" contentStyle="padding-left: 2em">
                     <button style="margin-top: -5%; height: 30px; width:120px; padding-left: 0.5em; text-align: left;">./210701000.csv</button>
                     <!-- <input type="file" id="folder-input" accept="./210701000.csv" style="margin-top: -5%; height: 30px; width:150px" webkitdirectory directory multiple> -->
                 </el-descriptions-item>
-                <el-descriptions-item label=" MC-ID" labelStyle="background-color: #F8F8FF;  text-align: center;  font-weight: bold; color: black" contentStyle="padding-left: 2em">
+                <el-descriptions-item label=" MC-ID" labelStyle="font-size:xx-small; background-color: #F8F8FF;  text-align: center;  font-weight: bold; color: black" contentStyle="padding-left: 2em">
                     <el-tree
                         :data="ocIds"
                         show-checkbox
@@ -27,7 +27,7 @@
                     </el-tree>
                 </el-descriptions-item>
 
-                <el-descriptions-item  label=" Source Domain" labelStyle="background-color: #F8F8FF; padding-left: 0em; font-weight: bold; color: black; text-align: center" contentStyle="padding-left: 2em">
+                <el-descriptions-item  label=" Source Domain" labelStyle="font-size:xx-small;background-color: #F8F8FF; padding-left: 0em; font-weight: bold; color: black; text-align: center" contentStyle="padding-left: 2em">
                     <el-select v-model="SValue[1]" style="width:120px; text-align: center;" @change="handleChangeS">
                         <el-option
                         v-for="item in options"
@@ -37,7 +37,7 @@
                         </el-option>
                     </el-select>
                 </el-descriptions-item>
-                <el-descriptions-item  label=" Target Domain" labelStyle="background-color: #F8F8FF; padding-left: 0em; font-weight: bold; color: black; text-align: center" contentStyle="padding-left: 2em">
+                <el-descriptions-item  label=" Target Domain" labelStyle="font-size:xx-small;background-color: #F8F8FF; padding-left: 0em; font-weight: bold; color: black; text-align: center" contentStyle="padding-left: 2em">
                 <el-select v-model="TValue[1]" style="width:120px" @change="handleChangeT">
                     <el-option
                     v-for="item in options"

@@ -4,7 +4,6 @@
         <el-row style="border: 0px solid #73ad21; height:100%;">
             <el-col :span="24">
               <div style="margin-top:4px; text-align: left; padding-left: 2em;"><label style="font-weight: bold;">{{title}}</label></div>
-
             </el-col>
         </el-row>
       </el-header>

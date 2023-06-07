@@ -16,9 +16,7 @@
                     <feature-importance :height="30" :title="'Input features importance'" :show-header="true"></feature-importance>
                 </el-col>
             </el-row>
-            <el-row type="flex" :gutter="5" style="margin-top: 5px; margin-left: 0px; margin-right: 0px;">
-            </el-row>
-            <el-row type="flex" :gutter="5" style="margin-top: 0px; margin-left: -20px; margin-right: -20px;">
+            <el-row type="flex" :gutter="5" style="margin-top: 5px; margin-left: -20px; margin-right: -20px;">
                 <el-col :span="4">
                     <model-config :height="66" :title="'Model settings'" :show-header="true"></model-config>
                 </el-col>
@@ -48,7 +46,8 @@
                         <model-evaluation :height="27" :title="'Loss value curve'" :show-header="true"></model-evaluation>
                     </el-row>
                     <el-row type="flex" :gutter="6" style="margin-top: 5px; margin-left: 3px; margin-right: 0px;">
-                        <state-comparison :height="17.5" :title="'Model state comparison'" :show-header="true"></state-comparison>
+                        <!-- <state-comparison :height="17.5" :title="'Model state comparison'" :show-header="true"></state-comparison> -->
+                        <state-persistent :height="17.5" :title="'Model state comparison'" :show-header="true"></state-persistent>
                     </el-row>
                 </el-col>
             </el-row>
@@ -71,6 +70,7 @@ import ActivationSaturation from '../components/activationSaturation.vue';
 import ModelEvaluation from '../components/modelEvaluation.vue';
 import StateComparison from '../components/stateComparison.vue';
 import featureImportance from '../components/featureImportance.vue';
+import StatePersistent from '../components/statePersistent.vue';
 export default {
     components: {
         instance,
@@ -85,7 +85,8 @@ export default {
         ActivationDistribution,
         ModelEvaluation,
         StateComparison,
-        featureImportance
+        featureImportance,
+        StatePersistent
     },
     name: 'Home',
     data () {
