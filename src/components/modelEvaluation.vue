@@ -113,7 +113,20 @@ export default {
                     splitLine: false
                 },
                 series: {
-                    data: this.loss_data,
+                    data: this.loss_data.map((value, index) => ({
+                        value: [index, value], // 数组第一个元素表示 x 坐标，第二个元素表示 y 坐标
+                        itemStyle: {
+                            color: 'blue'
+                        },
+                        emphasis: {
+                            itemStyle: {
+                                color: 'red',
+                                shadowBlur: 20, // 设置阴影模糊度
+                                shadowColor: 'rgba(255, 0, 0, 0.5)' // 设置阴影颜色
+                            },
+                            symbolSize: 100 // 设置高亮状态下的数据点大小
+                        }
+                    })),
                     type: 'line',
                     smooth: true,
                     yAxisIndex: 0,

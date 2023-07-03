@@ -171,11 +171,11 @@ export default {
                         },
                         {
                             offset: 1 - this.innerSD[i] / this.sourceBarData[i],
-                            color: 'rgba(0, 222, 215, 1)'
+                            color: '#56B8CF'
                         },
                         {
                             offset: 1,
-                            color: 'rgba(0, 222, 215, 1)' // 100% 处的颜色
+                            color: '#56B8CF' // 100% 处的颜色
                         }
                     ]
                 });
@@ -196,11 +196,11 @@ export default {
                         },
                         {
                             offset: 1 - this.innerTD[i] / this.targetBarData[i],
-                            color: 'rgba(255, 86, 36, 1)'
+                            color: '#FF7858'
                         },
                         {
                             offset: 1,
-                            color: 'rgba(255, 86, 36, 1)' // 100% 处的颜色
+                            color: '#FF7858' // 100% 处的颜色
                         }
                     ]
                 });
@@ -229,12 +229,12 @@ export default {
                     data: [{
                         name: 'source model',
                         itemStyle: {
-                            color: '#00DED7'
+                            color: '#56B8CF'
                         }
                     }, {
                         name: 'target model',
                         itemStyle: {
-                            color: '#FF5624'
+                            color: '#FF7858'
                         }
                     }],
                     top: '5%'

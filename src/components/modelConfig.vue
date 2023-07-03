@@ -51,7 +51,7 @@ export default {
             layersName: ['Input Layer', 'Attention Layer', 'Hidden Layer 1', 'Hidden Layer 2', 'Output Layer'],
             selectedlayer: 'Second Layer',
             selectedNeurons: '',
-            LayerColor: ['LightGray', 'yellow']
+            LayerColor: ['LightGray', '#FFD700']
         };
     },
     created () {

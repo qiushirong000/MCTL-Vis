@@ -174,11 +174,11 @@ export default {
                         return selectedNeurons.includes(item);
                     });
                     if (intersection.length === elements.length) {
-                        this.node_labels[count].itemStyle.color = 'red'; // 被选中或完全覆盖的节点
+                        this.node_labels[count].itemStyle.color = '#E24A52'; // 被选中或完全覆盖的节点
                     } else if (intersection.length === 0) {
                         this.node_labels[count].itemStyle.color = 'steelblue'; // 未被选中的节点
                     } else {
-                        this.node_labels[count].itemStyle.color = 'yellow'; // 相关的节点
+                        this.node_labels[count].itemStyle.color = '#FFDEAD'; // 相关的节点
                     }
                     count = count + 1;
                 }

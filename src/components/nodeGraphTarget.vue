@@ -65,7 +65,7 @@ export default {
     },
     methods: {
         loadRawData () {
-            this.$http.get('static/data/transfer_sample/epoch_' + store.readSelectedEpoch() + '.json').then((response) => {
+            this.$http.get('static/data/D7_to_D1_i1_layer1/epoch_' + store.readSelectedEpoch() + '.json').then((response) => {
                 store.updateWeightGraphT(response.data);
             });
         },

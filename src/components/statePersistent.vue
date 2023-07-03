@@ -37,7 +37,7 @@
 
 <script>
 export default {
-    name: 'instance',
+    name: 'statePersistent',
     props: {
         title: {
             type: String,
@@ -55,7 +55,8 @@ export default {
     },
     data () {
         return {
-            myChart: null
+            myChart: null,
+            method: ''
         };
     },
     mounted () {
@@ -177,6 +178,22 @@ export default {
                     [0.4, 0.7]
                 ]
             ];
+            let data2 = [
+                [
+                    [0, 0.1],
+                    [0, 0.2],
+                    [0, 0.35],
+                    [0, 0.42],
+                    [0, 0.3]
+                ],
+                [
+                    [0.1, 0.2],
+                    [0.2, 0.4],
+                    [0.3, 0.5],
+                    [0.3, 0.6],
+                    [0.4, 0.7]
+                ]
+            ];
 
             // 添加scatter系列
             option.series.push({
@@ -226,7 +243,7 @@ export default {
             // 添加scatter系列
             option.series.push({
                 type: 'scatter',
-                data: data[1],
+                data: data2[1],
                 symbolSize: 6,
                 itemStyle: {
                     color: 'orange'
@@ -236,7 +253,7 @@ export default {
             });
             option.series.push({
                 type: 'scatter',
-                data: data[0],
+                data: data2[0],
                 symbolSize: 6,
                 itemStyle: {
                     color: '#007aff'

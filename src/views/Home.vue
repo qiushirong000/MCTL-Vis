@@ -21,12 +21,15 @@
                     <model-config :height="66" :title="'Model settings'" :show-header="true"></model-config>
                 </el-col>
                 <el-col :span="14">
+                    <!-- <traffic-map :height="80" :title="'Input features importance'" :show-header="true"></traffic-map> -->
                     <el-row type="flex" :gutter="5" style="margin-top: 0px; margin-left: 0px; margin-right: 0px;">
                         <el-col :span="12">
+                            <!-- <pie-graph :height="60" :title="'Source model topology'" :show-header="true" :weightIndex="1" ></pie-graph> -->
                             <node-graph-source :height="60" :title="'Source model topology'" :show-header="true"></node-graph-source>
                         </el-col>
                         <el-col :span="12">
-                            <node-graph-target :height="60" :title="'Target model topology'" :show-header="true"></node-graph-target>
+                            <pie-graph :height="60" :title="'Source model topology'" :show-header="true" :weightIndex="0" ></pie-graph>
+                            <!-- <node-graph-target :height="60" :title="'Target model topology'" :show-header="true"></node-graph-target> -->
                         </el-col>
                     </el-row>
                     <el-row type="flex" :gutter="5" style="margin-top: 5px; margin-left: 1px; margin-right: 1px;">
@@ -71,6 +74,8 @@ import ModelEvaluation from '../components/modelEvaluation.vue';
 import StateComparison from '../components/stateComparison.vue';
 import featureImportance from '../components/featureImportance.vue';
 import StatePersistent from '../components/statePersistent.vue';
+import trafficMap from '../components/trafficMap.vue';
+import pieGraph from '../components/pieGraph.vue';
 export default {
     components: {
         instance,
@@ -86,7 +91,9 @@ export default {
         ModelEvaluation,
         StateComparison,
         featureImportance,
-        StatePersistent
+        StatePersistent,
+        trafficMap,
+        pieGraph
     },
     name: 'Home',
     data () {

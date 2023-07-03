@@ -174,10 +174,10 @@ export default {
                     calculable: true,
                     padding: 25,
                     inRange: {
-                        color: ['#00C8C8', 'rgba(3,4,5,0.4)', 'red'],
+                        color: ['steelblue', '#BEA6A0', '#AB0606'],
                         symbolSize: [100, 100]
                     },
-                    inverse: true,
+                    inverse: false,
                     orient: 'vertical',
                     left: 'right',
                     bottom: '20%',

@@ -81,6 +81,9 @@ export default {
                 series: [{
                     name: '概率密度',
                     type: 'bar',
+                    itemStyle: {
+                        color: 'steelblue'
+                    },
                     data: [1.26, 0.63, 0.42, 0.23, 0.16, 0.34, 0.22, 0.63, 0.73, 1.26],
                     barCategoryGap: 1
                 }]

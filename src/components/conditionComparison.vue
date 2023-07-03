@@ -82,12 +82,17 @@ export default {
         },
         createSeriesData (bins, gridIndex) {
             let seriesData = [];
+
+            let color = ['#5470c6', '#91cc75', '#fac858', '#ee6666', '#73c0de'];
             for (let i = 0; i < bins.length; i++) {
                 seriesData.push({
                     name: this.dataLabel[i],
                     data: bins[i],
                     type: 'line',
                     smooth: true,
+                    lineStyle: {
+                        color: color[i]
+                    },
                     yAxisIndex: gridIndex,
                     xAxisIndex: gridIndex
                 });

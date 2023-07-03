@@ -62,7 +62,7 @@ export default {
     methods: {
         // 加载static/data/transfer_sample/epoch_0.json文件，存储到fileData中
         loadRawData () {
-            this.$http.get('static/data/transfer_sample/epoch_0.json').then((response) => {
+            this.$http.get('static/data/D7_to_D1_i1_layer1/epoch_0.json').then((response) => {
                 store.updateWeightGraphS(response.data);
             });
         },
