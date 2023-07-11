@@ -14,7 +14,8 @@ export const store = new Vue({
         selectedNeuron: new Set([]), // 选中的神经元
         selectedEpoch: 90, // 选中的epoch
         weightGraphS: null, // 源权重图数据
-        weightGraphT: null // 目标权重图数据
+        weightGraphT: null, // 目标权重图数据
+        filePath: 'D7_to_D4_layer1'
     },
     methods: {
         updateCheckedIds (data) {

@@ -10,18 +10,22 @@
 
         <el-row type="flex" :gutter="5" style="width:100%; margin-top: 0px; margin-left: -2px; margin-right: 0px;">
             <el-col :span="12">
-                <node-graph-single :height="(height - 1)/2" :title='"Input Gate"' :showHeader="false" :weightIndex="1" :modelState="modelState" style=" margin-top: -10px;"></node-graph-single>
+                <pie-graph :height="(height - 1)/2" :title='"Input Gate"' :showHeader="false" :weightIndex="1" :modelState="modelState" style=" margin-top: -10px;"></pie-graph>
+                <!-- <node-graph-single :height="(height - 1)/2" :title='"Input Gate"' :showHeader="false" :weightIndex="1" :modelState="modelState" style=" margin-top: -10px;"></node-graph-single> -->
             </el-col>
             <el-col :span="12">
-                <node-graph-single :height="(height - 1)/2" :title='"Forget Gate"' :showHeader="false" :weightIndex="2" :modelState="modelState" style=" margin-top: -10px;"></node-graph-single>
+                <pie-graph :height="(height - 1)/2" :title='"Forget Gate"' :showHeader="false" :weightIndex="2" :modelState="modelState" style=" margin-top: -10px;"></pie-graph>
+                <!-- <node-graph-single :height="(height - 1)/2" :title='"Forget Gate"' :showHeader="false" :weightIndex="2" :modelState="modelState" style=" margin-top: -10px;"></node-graph-single> -->
             </el-col>
         </el-row>
         <el-row type="flex" :gutter="5" style="width:100%; margin-top: 15px; margin-left: -2px; margin-right: 0px;">
             <el-col :span="12">
-                <node-graph-single :height="(height - 1)/2" :title='"Cell State"' :showHeader="false" :weightIndex="3" :modelState="modelState" style=" margin-top: -10px;"></node-graph-single>
+                <pie-graph :height="(height - 1)/2" :title='"Cell State"' :showHeader="false" :weightIndex="3" :modelState="modelState" style=" margin-top: -10px;"></pie-graph>
+                <!-- <node-graph-single :height="(height - 1)/2" :title='"Cell State"' :showHeader="false" :weightIndex="3" :modelState="modelState" style=" margin-top: -10px;"></node-graph-single> -->
             </el-col>
             <el-col :span="12">
-                <node-graph-single :height="(height - 1)/2" :title='"Output Gate"' :showHeader="false" :weightIndex="4" :modelState="modelState" style=" margin-top: -10px;"></node-graph-single>
+                <pie-graph :height="(height - 1)/2" :title='"Output Gate"' :showHeader="false" :weightIndex="4" :modelState="modelState" style=" margin-top: -10px;"></pie-graph>
+                <!-- <node-graph-single :height="(height - 1)/2" :title='"Output Gate"' :showHeader="false" :weightIndex="4" :modelState="modelState" style=" margin-top: -10px;"></node-graph-single> -->
             </el-col>
         </el-row>
     </div>
@@ -30,10 +34,11 @@
 
 <script>
 import nodeGraphSingle from './nodeGraphSingle.vue';
+import pieGraph from './pieGraph.vue';
 
 export default {
     name: 'nodeGraphGates',
-    components: { nodeGraphSingle },
+    components: { nodeGraphSingle, pieGraph },
     props: {
         title: {
             type: String,

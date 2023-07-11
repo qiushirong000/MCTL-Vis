@@ -27,10 +27,11 @@
 import {store} from '../assets/js/DataManager.js';
 import nodeGraphSingle from './nodeGraphSingle.vue';
 import nodeGraphGates from './nodeGraphGates.vue';
+import pieGraph from './pieGraph.vue';
 import { eventBus, EVENTS } from '../assets/js/MessageCenter.js';
 export default {
     name: 'nodeGraphTarget',
-    components: { nodeGraphSingle, nodeGraphGates },
+    components: { nodeGraphSingle, nodeGraphGates, pieGraph },
     props: {
         title: {
             type: String,
@@ -49,7 +50,8 @@ export default {
     data () {
         return {
             radio: 1,
-            comName: 'nodeGraphSingle',
+            // comName: 'nodeGraphSingle',
+            comName: 'pieGraph',
             count: 1
         };
     },
@@ -65,7 +67,7 @@ export default {
     },
     methods: {
         loadRawData () {
-            this.$http.get('static/data/D7_to_D1_i1_layer1/epoch_' + store.readSelectedEpoch() + '.json').then((response) => {
+            this.$http.get('static/data/' + store.filePath + '/epoch_' + store.readSelectedEpoch() + '.json').then((response) => {
                 store.updateWeightGraphT(response.data);
             });
         },
@@ -77,7 +79,8 @@ export default {
             if (this.count > 0) {
                 this.comName = 'nodeGraphGates';
             } else {
-                this.comName = 'nodeGraphSingle';
+                // this.comName = 'nodeGraphSingle';
+                this.comName = 'pieGraph';
             }
             // console.log('change mode ... ' + this.comName);
             store.SwitchMapperViewEvent();

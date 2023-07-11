@@ -104,10 +104,12 @@ export default {
             if (this.myChart === null) { this.myChart = this.$echarts.init(this.$refs.chart); }
             if (this.fileData != null) {
                 this.linesDataS = this.fileData['seg' + this.condition_S + '_distribution'];
+                // this.linesDataS = this.linesDataS.slice(2, 7);
                 while (this.linesDataS.length > 5) {
                     this.linesDataS.pop();
                 }
                 this.linesDataT = this.fileData['seg' + this.condition_T + '_distribution'];
+                // this.linesDataT = this.linesDataT.slice(2, 7);
                 while (this.linesDataT.length > 5) {
                     this.linesDataT.pop();
                 }

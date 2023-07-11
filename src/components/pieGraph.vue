@@ -14,7 +14,7 @@
 </template>
 <script>
 import { eventBus, EVENTS } from '../assets/js/MessageCenter.js';
-// import {store} from '../assets/js/DataManager.js';
+import {store} from '../assets/js/DataManager.js';
 
 import * as d3 from 'd3';
 export default {
@@ -66,6 +66,7 @@ export default {
         if (this.modelState) {
             eventBus.$on(EVENTS.UPDATE_WEIGHT_GRAPH_T, function (data) {
                 this.rawData = data[this.weightLabel[this.weightIndex]];
+                this.weightData = JSON.parse(data['input_gate']);
             }.bind(this));
         } else {
             eventBus.$on(EVENTS.UPDATE_WEIGHT_GRAPH_S, function (data) {
@@ -77,8 +78,6 @@ export default {
             console.log('SWITCH_MAPPER_VIEW');
         });
         eventBus.$on(EVENTS.UPDATE_SELECTED_NEURON, function (data) {
-            // 选择SVG元素并删除所有子元素
-            d3.select('svg').selectAll('*').remove();
             this.drawView();
         }.bind(this));
     },
@@ -86,8 +85,21 @@ export default {
         // 设置视图高度
         this.$refs.subcontainer.style.height = this.height + 'vh';
         this.$refs.chart.style.height = this.showHeader ? (this.height - 2) + 'vh' : this.height + 'vh';
-        // 绘制视图
-        this.drawView();
+        // 读取数据,若数据存在则绘图
+        if (this.modelState) {
+            if (store.readWeightGraphT() !== null) {
+                this.rawData = store.readWeightGraphT()[this.weightLabel[this.weightIndex]];
+                this.weightData = JSON.parse(store.readWeightGraphT()['input_gate']);
+            }
+        } else {
+            if (store.readWeightGraphS() !== null) {
+                this.rawData = store.readWeightGraphS()[this.weightLabel[this.weightIndex]];
+                this.weightData = JSON.parse(store.readWeightGraphS()['input_gate']);
+            }
+        }
+        if (this.rawData !== undefined) {
+            this.drawView();
+        }
     },
     methods: {
         createEdges () {
@@ -150,7 +162,6 @@ export default {
             //     { source: 7, target: 10 },
             //     { source: 7, target: 11 }
             // ];
-
             this.createEdges();
             this.createNodes();
             // console.log(this.edges);
@@ -163,21 +174,19 @@ export default {
             // let width = svg.attr('width');
             // let height = svg.attr('height');
             // 获取 SVG 容器的宽度和高度，并设置 viewBox 属性
-            var svg = d3.select('svg');
+            var svg = d3.select(this.$refs.chart);
+            // 选择SVG元素并删除所有子元素
+            svg.selectAll('*').remove();
             var bbox = svg.node().getBoundingClientRect();
             var width = bbox.width;
             var height = bbox.height;
-            console.log('width: ' + width + ', height: ' + height);
+            // console.log('width: ' + width + ', height: ' + height);
 
             // Create the force simulation
             var simulation = d3.forceSimulation(nodes)
                 .force('link', d3.forceLink(links).id(d => d.id).distance(40))
                 .force('charge', d3.forceManyBody().strength(-300))
                 .force('center', d3.forceCenter(width / 2, height / 2));
-
-            // 将节点位置限制在 SVG 容器内部
-            simulation.force('x', d3.forceX().x(d => Math.min(width, d.x)))
-                .force('y', d3.forceY().y(d => Math.min(height, d.y)));
 
             // Create the links between the nodes
             var link = svg.append('g')
@@ -255,33 +264,6 @@ export default {
                 .attr('cx', 0)
                 .attr('cy', 0);
 
-            // Define the click event handler
-            var selectedNode = null;
-
-            function handleClick (d, i) {
-            // 在控制台中打印出节点信息
-                console.log('Clicked node ' + i + ': ' + JSON.stringify(d));
-                // Save the selected node
-                selectedNode = d3.select(this);
-                console.log(selectedNode);
-
-                // Reset the border style of all nodes
-                node.selectAll('circle')
-                    .attr('stroke-width', 2)
-                    .attr('stroke', '#fff');
-
-                // Update the border style of the clicked node
-                selectedNode.select('circle')
-                    .attr('stroke-width', 5)
-                    .attr('stroke', 'red');
-
-                // 将ID为2的节点设为选中状态，更改其颜色
-                // d3.selectAll('.node')
-                //     .filter((d, i) => i === 2)
-                //     .select('circle')
-                //     .attr('stroke', 'green');
-            }
-
             // Add the id labels to the nodes
             // node.append('text')
             //     .attr('class', 'id-label')
@@ -299,6 +281,10 @@ export default {
                 node
                     .attr('transform', d => `translate(${d.x},${d.y})`);
             });
+
+            // 将节点位置限制在 SVG 容器内部
+            simulation.force('x', d3.forceX().x(d => Math.min(width, d.x)))
+                .force('y', d3.forceY().y(d => Math.min(height, d.y)));
 
             // Functions for dragging the nodes
             function dragstarted (d) {
@@ -326,134 +312,33 @@ export default {
             function hideIdLabel (d) {
                 d3.select(this).selectAll('.id-label').classed('show', false);
             }
-        },
 
-        drawView2 () {
-            if (this.$refs.chart === undefined) return;
-            if (this.myChart === null) { this.myChart = this.$echarts.init(this.$refs.chart); }
-            // 初始节点数据
-            let data = [
-                {
-                    name: 'Node 1',
-                    x: 500, // 自定义关系图节点出现的坐标，以达到关系图的自定义布局
-                    y: 100
-                },
-                {
-                    name: 'Node 2',
-                    x: 200,
-                    y: 300
-                },
-                {
-                    name: 'Node 3',
-                    x: 400,
-                    y: 350
-                },
-                {
-                    name: 'Node 4',
-                    x: 500,
-                    y: 500
-                }
-            ];
+            function handleClick (d, i) {
+                // Define the click event handler
+                var selectedNode = null;
 
-            // 初始边数据
-            let links = [
-                {
-                    source: 0, // 可以为索引，也可以为节点的name
-                    target: 1,
-                    symbolSize: [5, 20],
-                    lineStyle: { // 自定义关系图该边的宽度和曲度
-                        width: 5,
-                        curveness: 0.2
-                    }
-                },
-                {
-                    source: 'Node 1',
-                    target: 'Node 3'
-                },
-                {
-                    source: 'Node 2',
-                    target: 'Node 3'
-                },
-                {
-                    source: 'Node 2',
-                    target: 'Node 4'
-                },
-                {
-                    source: 'Node 1',
-                    target: 'Node 4'
-                },
-                {
-                    source: 'Node 3',
-                    target: 'Node 4'
-                }
-            ];
+                // 在控制台中打印出节点信息
+                console.log('Clicked node ' + i + ': ' + JSON.stringify(d));
+                // Save the selected node
+                selectedNode = d3.select(this);
+                console.log(selectedNode);
 
-            // 关系图数据
-            let seriesData = [
-                {
-                    type: 'graph',
-                    layout: 'none', // 自定义布局
-                    symbolSize: 60,
-                    roam: false,
-                    zlevel: 1,
-                    label: {
-                        show: true,
-                        position: 'left'
-                    },
-                    edgeSymbol: ['circle', 'arrow'], // 边两端的标记类型，可以是一个数组分别指定两端，也可以是单个统一指定。这里设置为箭头
-                    edgeSymbolSize: [4, 10],
-                    edgeLabel: {
-                        fontSize: 20
-                    },
-                    data: data, // 节点数据
-                    links: links, // 边数据
-                    lineStyle: { // 统一设置边的样式
-                        opacity: 0.9,
-                        width: 2, // 边的宽度
-                        curveness: 0.1 // 曲度
-                    }
-                }
-            ];
+                // Reset the border style of all nodes
+                node.selectAll('circle')
+                    .attr('stroke-width', 2)
+                    .attr('stroke', '#fff');
 
-            let option = {
-                title: {
-                    text: 'Graph + Pie'
-                },
-                tooltip: {},
-                series: seriesData
-            };
+                // Update the border style of the clicked node
+                selectedNode.select('circle')
+                    .attr('stroke-width', 5)
+                    .attr('stroke', 'red');
 
-            option && this.myChart.setOption(option);
-
-            // 根据关系图的各节点信息得到饼图数据
-            function getPieSeries (graphData, chart) {
-                return graphData.map(function (item, index) {
-                    // convertToPixel()方法的两个参数：第一个参数用来指定坐标系，第二个参数用来指定某个点
-                    var center = chart.convertToPixel({seriesIndex: 0}, [item.x, item.y]);
-                    return {
-                        // 以下内容均可以根据自己的需求进行改变
-                        name: item.name,
-                        id: index + 'pie',
-                        zlevel: 2,
-                        type: 'pie',
-                        center: center,
-                        label: {
-                            formatter: '{c}',
-                            position: 'inside'
-                        },
-                        radius: 30,
-                        data: [
-                            { name: '工作', value: Math.round(Math.random() * 24) },
-                            { name: '娱乐', value: Math.round(Math.random() * 24) },
-                            { name: '睡觉', value: Math.round(Math.random() * 24) }
-                        ]
-                    };
-                });
+                // 将ID为2的节点设为选中状态，更改其颜色
+                // d3.selectAll('.node')
+                //     .filter((d, i) => i === 2)
+                //     .select('circle')
+                //     .attr('stroke', 'green');
             }
-
-            this.myChart.setOption({
-                series: getPieSeries(data, this.myChart)
-            });
         }
     }
 };

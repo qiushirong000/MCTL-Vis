@@ -28,8 +28,8 @@
                             <node-graph-source :height="60" :title="'Source model topology'" :show-header="true"></node-graph-source>
                         </el-col>
                         <el-col :span="12">
-                            <pie-graph :height="60" :title="'Source model topology'" :show-header="true" :weightIndex="0" ></pie-graph>
-                            <!-- <node-graph-target :height="60" :title="'Target model topology'" :show-header="true"></node-graph-target> -->
+                            <!-- <pie-graph :height="60" :title="'Source model topology'" :show-header="true" :weightIndex="0" ></pie-graph> -->
+                            <node-graph-target :height="60" :title="'Target model topology'" :show-header="true"></node-graph-target>
                         </el-col>
                     </el-row>
                     <el-row type="flex" :gutter="5" style="margin-top: 5px; margin-left: 1px; margin-right: 1px;">
