@@ -3,7 +3,7 @@
       <el-header style="height:2vh; background-color: gainsboro;" v-if="showHeader">
         <el-row style="border: 0px solid #73ad21; height:100%;">
             <el-col :span="24">
-              <div style="margin-top:4px; text-align: left; padding-left: 2em;"><label style="font-weight: bold;">{{title}}</label></div>
+              <div style="margin-top:4px; text-align: left; padding-left: 2em;"><label style="font-weight: bold; font-size: 15px;">{{title}}</label></div>
             </el-col>
         </el-row>
       </el-header>
@@ -49,7 +49,7 @@ export default {
             let option = {
                 tooltip: {},
                 grid: {
-                    height: '70%',
+                    height: '65%',
                     top: '15%',
                     left: '15%',
                     width: '75%'
@@ -85,6 +85,7 @@ export default {
                         color: 'steelblue'
                     },
                     data: [1.26, 0.63, 0.42, 0.23, 0.16, 0.34, 0.22, 0.63, 0.73, 1.26],
+                    // data: [0, 0.14, 0.32, 0.59, 1.45, 0.54, 0.48, 0.13, 0, 0],
                     barCategoryGap: 1
                 }]
             };

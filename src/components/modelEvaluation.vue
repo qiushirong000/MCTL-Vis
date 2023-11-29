@@ -3,7 +3,7 @@
         <el-header style="height:2vh; background-color: gainsboro;" v-if="showHeader">
             <el-row style="border: 0px solid #73ad21; height:100%;">
                 <el-col :span="24">
-                <div style="margin-top:4px; text-align: left; padding-left: 2em;"><label style="font-weight: bold;">{{title}}</label></div>
+                <div style="margin-top:4px; text-align: left; padding-left: 2em;"><label style="font-weight: bold; font-size: 15px;">{{title}}</label></div>
 
                 </el-col>
             </el-row>
@@ -13,7 +13,7 @@
                 <div style="margin-top:7px"></div>
             </el-col>
             <el-col :span="4" style="margin-top: 5px;">
-                <el-select v-model="metricValue" placeholder="RMSE" size="mini">
+                <el-select v-model="metricValue" placeholder="MSE" size="mini">
                     <el-option
                     v-for="item in metricOptions"
                     :key="item.value"
@@ -116,7 +116,7 @@ export default {
                     data: this.loss_data.map((value, index) => ({
                         value: [index, value], // 数组第一个元素表示 x 坐标，第二个元素表示 y 坐标
                         itemStyle: {
-                            color: 'blue'
+                            color: index === 40 ? 'red' : 'blue'
                         },
                         emphasis: {
                             itemStyle: {

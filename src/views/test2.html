@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>ECharts - Graph Example</title>
+    <script src="https://cdn.jsdelivr.net/npm/echarts@5.2.2/dist/echarts.min.js"></script>
+</head>
+
+<body>
+    <div id="graphChart" style="width: 600px; height: 400px;"></div>
+
+    <script>
+        // 创建节点连接图实例
+        var graphChart = echarts.init(document.getElementById('graphChart'));
+
+        // 设置行标签
+        var rowLabels = ['Max', 'Min'];
+
+        // 设置列标签
+        var colLabels = ['Column 1', 'Column 2', 'Column 3', 'Column 4', 'Column 5', 'Column 6', 'Column 7', 'Column 8', 'Column 9', 'Column 10'];
+
+        // 设置节点数据
+        var nodes = [
+            { name: '14', row: 0, col: 0 },
+            { name: '64', row: 0, col: 1 },
+            { name: '83', row: 0, col: 2 },
+            { name: '56', row: 0, col: 3 },
+            { name: '39', row: 0, col: 4 },
+            { name: '69', row: 0, col: 5 },
+            { name: '41', row: 0, col: 6 },
+            { name: '61', row: 0, col: 7 },
+            { name: '26', row: 0, col: 8 },
+            { name: '33', row: 0, col: 9 },
+
+            { name: '72', row: 1, col: 0 },
+            { name: '43', row: 1, col: 1 },
+            { name: '63', row: 1, col: 2 },
+            { name: '19', row: 1, col: 3 },
+            { name: '46', row: 1, col: 4 },
+            { name: '84', row: 1, col: 5 },
+            { name: '65', row: 1, col: 6 },
+            { name: '55', row: 1, col: 7 },
+            { name: '32', row: 1, col: 8 },
+            { name: '20', row: 1, col: 9 },
+        ];
+
+        // 设置连线数据
+        var links = [
+            { source: '14', target: '64' },
+            { source: '64', target: '83' },
+            { source: '61', target: '26' },
+            { source: '72', target: '43' },
+            { source: '63', target: '19' },
+            { source: '32', target: '20' },
+        ];
+
+        // 设置节点的数值数据
+        var valueData = [10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120, 10, 20, 30, 40, 50, 60, 70, 80];
+
+        // 设置颜色映射范围
+        var colorRange = ['#ff0000', '#00ff00']; // 设置为红绿渐变色
+
+
+        // 设置节点连接图的配置项
+        var options = {
+            tooltip: {},
+            animationDurationUpdate: 1500,
+            animationEasingUpdate: 'quinticInOut',
+            series: [
+                {
+                    type: 'graph',
+                    layout: 'none',
+                    symbol: 'rect', // 设置节点为矩形
+                    symbolSize: 40,
+                    roam: true,
+                    label: {
+                        show: true
+                    },
+                    edgeSymbol: ['', ''],
+                    edgeSymbolSize: [4, 20],
+                    edgeLabel: {
+                        fontSize: 12
+                    },
+                    data: nodes.map(function (node, index) {
+                        return {
+                            name: node.name,
+                            x: node.col * 100,
+                            y: node.row * 100,
+                            value: valueData[index], // 设置节点的数值
+                            itemStyle: {
+                                color: null // 颜色将通过 visualMap 组件映射
+                            }
+
+                        };
+                    }),
+                    edges: links.map(function (link) {
+                        return {
+                            source: link.source,
+                            target: link.target
+                        };
+                    }),
+                    lineStyle: {
+                        opacity: 0.9,
+                        width: 4,
+                        curveness: 0,
+                        color: 'steelblue'
+                    }
+                }
+            ],
+            visualMap: {
+                type: 'continuous',
+                min: Math.min(...valueData),
+                max: Math.max(...valueData),
+                inRange: {
+                    color: colorRange // 设置颜色映射范围
+                },
+                orient: 'horizontal',
+                left: 'center',
+                padding: -25,
+            }
+        };
+
+        // 将配置项设置到节点连接图实例中
+        graphChart.setOption(options);
+    </script>
+</body>
+
+</html>

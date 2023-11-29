@@ -48,7 +48,7 @@ export default {
             node_labels: [],
             selected_nodes: [],
             rawData: [],
-            weightLabel: ['all_gates_topoloy', 'input_gate_topoloy', 'output_gate_topoloy', 'forget_gate_topoloy', 'cell_state_topoloy'],
+            weightLabel: ['all_gates_topoloy', 'input_gate_topoloy', 'output_gate_topoloy', 'cell_state_topoloy', 'forget_gate_topoloy'],
             nodeBaseSize: 12,
             nodeStepSize: 0.4,
             edgeGravity: 0.15
@@ -116,7 +116,51 @@ export default {
                 }
             }
         },
+        // 生成随机颜色
+        // 生成随机渐变颜色
+        getRandomGradientColor () {
+            let ran = Math.random();
+            var hue;
+            if (ran > 0.5) {
+                hue = Math.floor(Math.random() * 10 + 200); // 计算色相值
+            } else {
+                hue = Math.floor(Math.random() * 50); // 计算色相值
+            }
+            return 'hsl(' + hue + ', 100%, 50%)'; // 转换为 HSL 颜色表示法
+        },
+
+        subtractMatrices (matrix1, matrix2) {
+            matrix1 = JSON.parse(matrix1);
+            matrix2 = JSON.parse(matrix2);
+            if (matrix1.length !== matrix2.length || matrix1[0].length !== matrix2[0].length) {
+                throw new Error('Matrix dimensions are not compatible.');
+            }
+
+            var numRows = matrix1.length;
+            var numCols = matrix1[0].length;
+
+            var result = [];
+
+            for (var i = 0; i < numRows; i++) {
+                result[i] = [];
+                for (var j = 0; j < numCols; j++) {
+                    result[i][j] = matrix1[i][j] - matrix2[i][j];
+                }
+            }
+
+            return result;
+        },
+
         createNodes () {
+            // console.log('draw nodes: ', this.rawData['nodes']);
+            if (store.readWeightGraphT() === null) return;
+            if (store.readWeightGraphS() === null) return;
+            let changeWeight = this.subtractMatrices(store.readWeightGraphT()['input_gate'], store.readWeightGraphS()['input_gate']);
+
+            // console.log('changeWeight 1: ', store.readWeightGraphT()['input_gate']);
+            // console.log('changeWeight 2: ', store.readWeightGraphS()['input_gate']);
+            console.log('changeWeight: ', changeWeight);
+
             this.node_labels = [];
             for (let key in this.rawData['nodes']) {
                 this.node_labels.push({
@@ -124,6 +168,7 @@ export default {
                     name: this.rawData['nodes'][key].toString(),
                     itemStyle: {
                         color: 'steelblue'
+                        // color: this.getRandomGradientColor()
                     },
                     symbolSize: this.nodeBaseSize + this.nodeStepSize * this.rawData['nodes'][key].length
                 });
@@ -174,11 +219,13 @@ export default {
                         return selectedNeurons.includes(item);
                     });
                     if (intersection.length === elements.length) {
-                        this.node_labels[count].itemStyle.color = '#E24A52'; // 被选中或完全覆盖的节点
+                        // this.node_labels[count].itemStyle.color = '#E24A52'; // 被选中或完全覆盖的节点
+                        this.node_labels[count].itemStyle.color = '#AB0606'; // 被选中或完全覆盖的节点
                     } else if (intersection.length === 0) {
                         this.node_labels[count].itemStyle.color = 'steelblue'; // 未被选中的节点
                     } else {
-                        this.node_labels[count].itemStyle.color = '#FFDEAD'; // 相关的节点
+                        // this.node_labels[count].itemStyle.color = '#FFDEAD'; // 相关的节点
+                        this.node_labels[count].itemStyle.color = 'orange'; // 相关的节点
                     }
                     count = count + 1;
                 }

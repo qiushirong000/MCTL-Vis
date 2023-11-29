@@ -15,7 +15,10 @@ export const store = new Vue({
         selectedEpoch: 90, // 选中的epoch
         weightGraphS: null, // 源权重图数据
         weightGraphT: null, // 目标权重图数据
-        filePath: 'D7_to_D4_layer1'
+        nodeColerValue: null, // 节点颜色值
+        // filePath: 'D1_to_D7_layer1'
+        // filePath: 'D7_to_D4_layer1'
+        filePath: 'D7_to_D1_layer2'
     },
     methods: {
         updateCheckedIds (data) {
@@ -84,6 +87,13 @@ export const store = new Vue({
         updateSelectedNeuron (data) {
             this.selectedNeuron = data;
             eventBus.$emit(EVENTS.UPDATE_SELECTED_NEURON, data);
+        },
+        readColorValue () {
+            return this.nodeColerValue;
+        },
+        updateColorValue (data) {
+            this.nodeColerValue = data;
+            eventBus.$emit(EVENTS.UPDATE_COLOR_VALUE, data);
         }
     }
 });

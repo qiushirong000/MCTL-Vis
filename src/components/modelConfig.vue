@@ -3,7 +3,7 @@
       <el-header style="height:2vh; background-color: gainsboro;" v-if="showHeader">
         <el-row style="border: 0px solid #73ad21; height:100%;">
             <el-col :span="24">
-              <div style="margin-top:4px; text-align: left; padding-left: 2em;"><label style="font-weight: bold; font-size: small;">{{title}}</label></div>
+              <div style="margin-top:4px; text-align: left; padding-left: 2em;"><label style="font-weight: bold; font-size: 15px;">{{title}}</label></div>
             </el-col>
         </el-row>
         </el-header>

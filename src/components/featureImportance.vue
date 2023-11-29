@@ -3,7 +3,7 @@
       <el-header style="height:2vh; background-color: gainsboro;" v-if="showHeader">
         <el-row style="border: 0px solid #73ad21; height:100%;">
             <el-col :span="24">
-              <div style="margin-top:4px; text-align: left; padding-left: 2em;"><label style="font-weight: bold;">{{title}}</label></div>
+              <div style="margin-top:4px; text-align: left; padding-left: 2em;"><label style="font-weight: bold; font-size: 15px;">{{title}}</label></div>
 
             </el-col>
         </el-row>
@@ -153,6 +153,8 @@ export default {
             // 设置颜色
             let colorsS = [];
             let colorsT = [];
+            // this.sourceBarData = [33.4, 23.4, 25.8, 33.0, 16];
+            // this.targetBarData = [35, 24, 26, 34.5, 16.3];
             for (let i = 0; i < this.xAxisLabel.length; i++) {
                 colorsS.push({
                     type: 'linear',

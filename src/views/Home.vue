@@ -10,15 +10,15 @@
                     <condition-similarity :height="30" :title="'Multi-condition Similarity'" :show-header="true"></condition-similarity>
                 </el-col>
                 <el-col :span="7">
-                    <condition-comparison :height="30" :title="'Dataset distribution'" :show-header="true"></condition-comparison>
+                    <condition-comparison :height="30" :title="'Dataset Distribution'" :show-header="true"></condition-comparison>
                 </el-col>
                 <el-col :span="6">
-                    <feature-importance :height="30" :title="'Input features importance'" :show-header="true"></feature-importance>
+                    <feature-importance :height="30" :title="'Input Features Sensitivity'" :show-header="true"></feature-importance>
                 </el-col>
             </el-row>
             <el-row type="flex" :gutter="5" style="margin-top: 5px; margin-left: -20px; margin-right: -20px;">
                 <el-col :span="4">
-                    <model-config :height="66" :title="'Model settings'" :show-header="true"></model-config>
+                    <model-config :height="66" :title="'Model Settings'" :show-header="true"></model-config>
                 </el-col>
                 <el-col :span="14">
                     <!-- <traffic-map :height="80" :title="'Input features importance'" :show-header="true"></traffic-map> -->
@@ -37,20 +37,20 @@
                     </el-row>
                 </el-col>
                 <el-col :span="6">
-                    <el-row type="flex" :gutter="4" style="margin-top: 0px; margin-left: 0px; margin-right: 0px;">
-                        <el-col :span="12">
-                            <activation-saturation :height="20" :show-header="true" :title="'Activation saturation'"></activation-saturation>
-                        </el-col>
-                        <el-col :span="12">
-                            <activation-distribution :height="20" :show-header="true" :title="'Activation distribution'"></activation-distribution>
-                        </el-col>
-                    </el-row>
-                    <el-row type="flex" :gutter="6" style="margin-top: 5px; margin-left: 3px; margin-right: 0px;">
-                        <model-evaluation :height="27" :title="'Loss value curve'" :show-header="true"></model-evaluation>
-                    </el-row>
-                    <el-row type="flex" :gutter="6" style="margin-top: 5px; margin-left: 3px; margin-right: 0px;">
+                    <el-row type="flex" :gutter="6" style="margin-top: 0px; margin-left: 3px; margin-right: 0px;">
                         <!-- <state-comparison :height="17.5" :title="'Model state comparison'" :show-header="true"></state-comparison> -->
-                        <state-persistent :height="17.5" :title="'Model state comparison'" :show-header="true"></state-persistent>
+                        <state-persistent :height="29.5" :title="'Model state comparison'" :show-header="true"></state-persistent>
+                    </el-row>
+                    <el-row type="flex" :gutter="4" style="margin-top: 5px; margin-left: 0px; margin-right: 0px;">
+                        <el-col :span="12">
+                            <activation-saturation :height="15" :show-header="true" :title="'Activation saturation'"></activation-saturation>
+                        </el-col>
+                        <el-col :span="12">
+                            <activation-distribution :height="15" :show-header="true" :title="'Activation distribution'"></activation-distribution>
+                        </el-col>
+                    </el-row>
+                    <el-row type="flex" :gutter="3" style="margin-top: 5px; margin-left: 3px; margin-right: 0px;">
+                        <model-evaluation :height="20" :title="'Loss value curve'" :show-header="true"></model-evaluation>
                     </el-row>
                 </el-col>
             </el-row>

@@ -3,14 +3,14 @@
       <el-header style="height:2vh; background-color: gainsboro;" v-if="showHeader">
         <el-row style="border: 0px solid #73ad21; height:100%;">
             <el-col :span="11">
-              <div style="margin-top:4px; text-align: left; padding-left: 1.5em;"><label style="font-weight: bold;">{{title}}</label></div>
+              <div style="margin-top:4px; text-align: left; padding-left: 1.5em;"><label style="font-weight: bold; font-size: 15px;">{{title}}</label></div>
             </el-col>
             <el-col :span="10">
             <div style="margin-top:7px">
-              <el-radio-group v-model="radio" @change="changeMode">
+              <!-- <el-radio-group v-model="radio" @change="changeMode">
                 <el-radio :label="1">mode 1</el-radio>
                 <el-radio :label="2">mode 2</el-radio>
-              </el-radio-group>
+              </el-radio-group> -->
             </div>
             </el-col>
             <el-col :span="2">
@@ -73,6 +73,11 @@ export default {
         },
 
         changeMode (param) {
+            if (param === 1) {
+                store.updateColorValue(null);
+            } else if (param === 2) {
+                store.updateColorValue(10);
+            }
             console.log('change mode :', param);
         },
         checkGraph () {

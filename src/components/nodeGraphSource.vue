@@ -3,14 +3,14 @@
       <el-header style="height:2vh; background-color: gainsboro;" v-if="showHeader">
         <el-row style="border: 0px solid #73ad21; height:100%;">
             <el-col :span="11">
-              <div style="margin-top:4px; text-align: left; padding-left: 1.5em;"><label style="font-weight: bold;">{{title}}</label></div>
+              <div style="margin-top:4px; text-align: left; padding-left: 1.5em;"><label style="font-weight: bold; font-size: 15px;">{{title}}</label></div>
             </el-col>
             <el-col :span="10">
             <div style="margin-top:7px">
-              <el-radio-group v-model="radio" @change="changeMode">
+              <!-- <el-radio-group v-model="radio" @change="changeMode">
                 <el-radio :label="1">mode 1</el-radio>
                 <el-radio :label="2">mode 2</el-radio>
-              </el-radio-group>
+              </el-radio-group> -->
             </div>
           </el-col>
           <el-col :span="2">
@@ -68,7 +68,7 @@ export default {
     methods: {
         // 加载static/data/transfer_sample/epoch_0.json文件，存储到fileData中
         loadRawData () {
-            this.$http.get('static/data/' + store.filePath + '/epoch_0.json').then((response) => {
+            this.$http.get('static/data/' + store.filePath + '/epoch_2.json').then((response) => {
                 store.updateWeightGraphS(response.data);
             });
         },
@@ -80,8 +80,8 @@ export default {
             if (this.count > 0) {
                 this.comName = 'nodeGraphGates';
             } else {
-                // this.comName = 'nodeGraphSingle';
-                this.comName = 'pieGraph';
+                this.comName = 'nodeGraphSingle';
+                // this.comName = 'pieGraph';
             }
             // console.log('change mode ... ' + this.comName);
             store.SwitchMapperViewEvent();

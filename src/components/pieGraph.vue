@@ -169,10 +169,6 @@ export default {
             var nodes = this.node_labels;
             var links = this.edges;
 
-            // Create the SVG container for the graph
-            // var svg = d3.select('svg');
-            // let width = svg.attr('width');
-            // let height = svg.attr('height');
             // 获取 SVG 容器的宽度和高度，并设置 viewBox 属性
             var svg = d3.select(this.$refs.chart);
             // 选择SVG元素并删除所有子元素
@@ -185,8 +181,48 @@ export default {
             // Create the force simulation
             var simulation = d3.forceSimulation(nodes)
                 .force('link', d3.forceLink(links).id(d => d.id).distance(40))
-                .force('charge', d3.forceManyBody().strength(-300))
+                .force('charge', d3.forceManyBody().strength(-200))
                 .force('center', d3.forceCenter(width / 2, height / 2));
+
+            const handleClick = (d, i) => {
+                // Reset the border style of all nodes
+                // node.selectAll('circle')
+                //     .attr('stroke-width', 2)
+                //     .attr('stroke', '#fff');
+                // 在控制台中打印出节点信息
+                // console.log('Clicked node ' + i + ': ' + JSON.stringify(d));
+
+                // Define the click event handler
+                let selectedNode = d3.select(this);
+                // console.log(selectedNode);
+                // Update the border style of the clicked node
+                selectedNode.select('circle')
+                    .attr('stroke-width', 5)
+                    .attr('stroke', 'red');
+
+                // 使用selected_nodes数组记录被选中的节点
+                // this.selected_nodes = [];
+                this.selected_nodes.push(d.id);
+                console.log(this.selected_nodes);
+
+                // 无重复绘制所有被选中的神经元
+                // let selectedNeurons = new Set();
+                // let tmp = d.name.split(',');
+                // for (let i = 0; i < tmp.length; i++) {
+                //     selectedNeurons.add(tmp[i]);
+                // }
+                // console.log(selectedNeurons);
+
+                // let corrNode = null;
+                // // 将node中name包括字符串'2'的节点设为选中状态，更改其颜色
+                // corrNode = d3.selectAll('.node')
+                //     .filter((d, i) => {
+                //         return d.name.includes('2');
+                //     });
+                // corrNode.select('circle')
+                //     .attr('stroke-width', 5)
+                //     .attr('stroke', 'green');
+            };
 
             // Create the links between the nodes
             var link = svg.append('g')
@@ -196,7 +232,7 @@ export default {
                 .enter().append('line')
                 .attr('stroke-width', 1.5)
                 .attr('stroke', '#000');
-
+            // var that = this;
             // Create the nodes as pie charts
             var node = svg.append('g')
                 .attr('class', 'nodes')
@@ -311,33 +347,6 @@ export default {
 
             function hideIdLabel (d) {
                 d3.select(this).selectAll('.id-label').classed('show', false);
-            }
-
-            function handleClick (d, i) {
-                // Define the click event handler
-                var selectedNode = null;
-
-                // 在控制台中打印出节点信息
-                console.log('Clicked node ' + i + ': ' + JSON.stringify(d));
-                // Save the selected node
-                selectedNode = d3.select(this);
-                console.log(selectedNode);
-
-                // Reset the border style of all nodes
-                node.selectAll('circle')
-                    .attr('stroke-width', 2)
-                    .attr('stroke', '#fff');
-
-                // Update the border style of the clicked node
-                selectedNode.select('circle')
-                    .attr('stroke-width', 5)
-                    .attr('stroke', 'red');
-
-                // 将ID为2的节点设为选中状态，更改其颜色
-                // d3.selectAll('.node')
-                //     .filter((d, i) => i === 2)
-                //     .select('circle')
-                //     .attr('stroke', 'green');
             }
         }
     }

@@ -13,5 +13,6 @@ export const EVENTS = {
     UPDATE_WEIGHT_GRAPH_T: 'update-weight-graph-target',
     SWITCH_MAPPER_VIEW: 'switch-mapper-view',
     UPDATE_SELECTED_EPOCH: 'update-selected-epoch',
-    UPDATE_SELECTED_NEURON: 'update-selected-neuron'
+    UPDATE_SELECTED_NEURON: 'update-selected-neuron',
+    UPDATE_COLOR_VALUE: 'update-color-value'
 };

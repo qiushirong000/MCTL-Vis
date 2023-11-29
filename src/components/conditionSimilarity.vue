@@ -3,15 +3,18 @@
       <el-header style="height:2vh; background-color: gainsboro;" v-if="showHeader">
         <el-row style="border: 0px solid #73ad21; height:100%;">
             <el-col :span="24">
-              <div style="margin-top:4px; text-align: left; padding-left: 2em;"><label style="font-weight: bold;">{{title}}</label></div>
+              <div style="margin-top:4px; text-align: left; padding-left: 2em;"><label style="font-weight: bold; font-size: 15px;">{{title}}</label></div>
 
             </el-col>
         </el-row>
       </el-header>
       <el-row style="border: 0px solid #73ad21; height:100%;">
+        <el-col :span="16">
+            <div class="chart" ref="chart"></div>
+        </el-col>
         <el-col :span="8">
             <el-form ref="form"  label-width="80px" size="mini">
-                <br><br>
+                <!-- <br><br>
                 <label style="font-weight: bold;">Algorithm</label>
                 <br><br><br>
                 <el-select v-model="method" placeholder="JSD" style="width:120px">
@@ -22,11 +25,37 @@
                 <br><br>
                 <label style="font-weight: bold;">Similarity</label>
                 <br><br><br>
-                <label style="font-weight: bold;">{{similarityValue}}</label>
+                <label style="font-weight: bold;">{{similarityValue}}</label> -->
+                <el-descriptions class="margin-top" :column="1" :size="'small'" style="margin-left: 8%; margin-top: 5%; text-align: center;" :border="false">
+                    <el-descriptions-item label="Algorithm" labelStyle="font-size:15px; font-weight: bold;">
+                        <el-select v-model="method" size="mini" placeholder="JSD" style="width:80%; height:2vh;margin-top: -4%;margin-left: -3%;" >
+                            <el-option label="JSD" value="JSD"></el-option>
+                            <el-option label="KLD" value="KLD"></el-option>
+                        </el-select>
+                    </el-descriptions-item>
+                    <el-descriptions-item label="Simlarity  " labelStyle="font-size:15px; font-weight: bold;">
+                        <!-- <label style="font-weight: bold; font-size:15px;">{{similarityValue}}</label> -->
+                        <!-- 0.7832 -->
+                        <label style="font-weight: bold; font-size:15px;">0.7934</label>
+                    </el-descriptions-item>
+                    <!-- <el-descriptions-item label="NOxCAL" >0.2237</el-descriptions-item>
+                    <el-descriptions-item label="AirVol">0.4841</el-descriptions-item>
+                    <el-descriptions-item label="Ammonia-A" style="margin-left: 8%; margin-top: 5%;">0.2072</el-descriptions-item>
+                    <el-descriptions-item label="Ammonia-B">0.1732</el-descriptions-item>
+                    <el-descriptions-item label="02">   0.1315</el-descriptions-item> -->
+                </el-descriptions>
+                <br>
+                <label style="font-weight: bold; font-size:15px; margin-left: -3%;">Feature Divergence </label>
+                <el-descriptions class="margin-top" title="" :column="1" :size="'small'" style="margin-left: 6%; margin-top: 5%; width:80%;" :border="true" labelStyle="font-size:15px; text-align: center; width:60%;" contentStyle="font-size:15px;width:40%;">
+                    <!--  0.1516  0.2022  0.2205  0.2380  0.2231-->
+                    <!-- 0.5161, 0.1089, 0.4050, 0.6919, 0.1716 -->
+                    <el-descriptions-item label="NOxCAL" > 0.5161</el-descriptions-item>
+                    <el-descriptions-item label="AirVol">0.1089</el-descriptions-item>
+                    <el-descriptions-item label="Ammonia-A" style="margin-left: 8%; margin-top: 5%;">0.4050</el-descriptions-item>
+                    <el-descriptions-item label="Ammonia-B">0.6919</el-descriptions-item>
+                    <el-descriptions-item label="O2">0.1716</el-descriptions-item>
+                </el-descriptions>
             </el-form>
-        </el-col>
-        <el-col :span="16">
-            <div class="chart" ref="chart"></div>
         </el-col>
     </el-row>
     </div>
@@ -149,8 +178,8 @@ export default {
                 grid: {
                     height: '80%',
                     top: '6%',
-                    left: '5%',
-                    width: '80%'
+                    left: '10%',
+                    width: '75%'
                 },
                 xAxis: {
                     type: 'category',
@@ -169,7 +198,7 @@ export default {
                     }
                 },
                 visualMap: {
-                    min: 0.85,
+                    min: 0.6,
                     max: 1,
                     calculable: true,
                     padding: 25,
