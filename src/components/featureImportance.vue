@@ -251,7 +251,9 @@ export default {
                             //   barBorderRadius: 10,
                             color: function (params) {
                                 return colorsS[params.dataIndex];
-                            }
+                            },
+                            borderColor: '#56B8CF',
+                            borderWidth: 3
                         }
                     },
                     {
@@ -263,7 +265,9 @@ export default {
                             //   barBorderRadius: 10,
                             color: function (params) {
                                 return colorsT[params.dataIndex];
-                            }
+                            },
+                            borderColor: '#FF7858',
+                            borderWidth: 3
                         }
                     }
                 ]
