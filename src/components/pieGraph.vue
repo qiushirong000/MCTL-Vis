@@ -77,9 +77,9 @@ export default {
         eventBus.$on(EVENTS.SWITCH_MAPPER_VIEW, function () {
             console.log('SWITCH_MAPPER_VIEW');
         });
-        eventBus.$on(EVENTS.UPDATE_SELECTED_NEURON, function (data) {
-            this.drawView();
-        }.bind(this));
+        // eventBus.$on(EVENTS.UPDATE_SELECTED_NEURON, function (data) {
+        //     this.drawView();
+        // }.bind(this));
     },
     mounted () {
         // 设置视图高度
@@ -354,7 +354,7 @@ export default {
 </script>
 <style scoped>
     .instance {
-        border: 1px solid rgb(0, 0, 0);
+        /* border: 1px solid rgb(0, 0, 0); */
         width: 100%;
         height: 30vh;
     }

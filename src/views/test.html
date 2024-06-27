@@ -2,215 +2,223 @@
 <html>
 
 <head>
-    <meta charset="utf-8">
-    <title>Force-Directed Graph with D3.js</title>
-    <script src="https://d3js.org/d3.v4.min.js"></script>
-    <style>
-        .node {
-            stroke: #fff;
-            stroke-width: 1.5px;
-            cursor: pointer;
-        }
-
-        .link {
-            stroke: #000;
-            stroke-width: 1.5px;
-        }
-
-        .pie {
-            font-size: 10px;
-            font-family: Arial, sans-serif;
-            text-anchor: middle;
-        }
-
-        .id-label {
-            font-size: 12px;
-            font-family: Arial, sans-serif;
-            text-anchor: middle;
-            pointer-events: none;
-            visibility: hidden;
-            fill: black;
-        }
-
-        .id-label.show {
-            visibility: visible;
-        }
-    </style>
+    <title>ECharts Bar Chart</title>
+    <script src="https://cdn.jsdelivr.net/npm/echarts@5.2.1/dist/echarts.min.js"></script>
 </head>
 
 <body>
-    <svg width="960" height="600"></svg>
-    <script>
-        // Create the data for the graph
-        var nodes = [
-            { id: 0, group: 1, value: [30, 20, 50] },
-            { id: 1, group: 1, value: [10, 40, 50] },
-            { id: 2, group: 2, value: [50, 10, 40] },
-            { id: 3, group: 2, value: [20, 50, 30] },
-            { id: 4, group: 3, value: [40, 30, 30] },
-            { id: 5, group: 3, value: [30, 20, 50] },
-            { id: 6, group: 4, value: [50, 10, 40] },
-            { id: 7, group: 4, value: [20, 50, 30] },
-            { id: 8, group: 5, value: [40, 30, 30] },
-            { id: 9, group: 5, value: [30, 20, 50] }
-        ];
+    <div id="chart" style="width: 600px; height: 400px;"></div>
 
-        var links = [
-            { source: 0, target: 1 },
-            { source: 0, target: 2 },
-            { source: 1, target: 3 },
-            { source: 2, target: 4 },
-            { source: 3, target: 5 },
-            { source: 4, target: 6 },
-            { source: 5, target: 7 },
-            { source: 6, target: 8 },
-            { source: 7, target: 9 }
-        ];
-
-        // Create the force simulation
-        var simulation = d3.forceSimulation(nodes)
-            .force("link", d3.forceLink(links).id(d => d.id).distance(100))
-            .force("charge", d3.forceManyBody().strength(-200))
-            .force("center", d3.forceCenter(480, 300));
-
-        // Create the SVG container for the graph
-        var svg = d3.select("svg"),
-            width = +svg.attr("width"),
-            height = +svg.attr("height");
-
-        // Create the links between the nodes
-        var link = svg.append("g")
-            .attr("class", "links")
-            .selectAll("line")
-            .data(links)
-            .enter().append("line")
-            .attr("stroke-width", 1.5)
-            .attr("stroke", "#000");
-
-        // Create the nodes as pie charts
-        var node = svg.append("g")
-            .attr("class", "nodes")
-            .selectAll(".node")
-            .data(nodes)
-            .enter().append("g")
-            .attr("class", "node")
-            .call(d3.drag()
-                .on("start", dragstarted)
-                .on("drag", dragged)
-                .on("end", dragended))
-            .on("mouseover", showIdLabel)
-            .on("mouseout", hideIdLabel)
-            .on("click", handleClick);
+    <script type="text/javascript">
+        // 初始化 ECharts 实例
+        var chart = echarts.init(document.getElementById('chart'));
 
 
-        var pie = d3.pie()
-            .sort(null);
+        var data = {
+            title: ['Source', 'Target'],
+            leftData: [1400, 1200],
+            rightData: [670, 870],
+        };
 
-        var arc = d3.arc()
-            .innerRadius(0)
-            .outerRadius(20);
-
-        node.selectAll(".arc")
-            .data(d => pie(d.value))
-            .enter().append("path")
-            .attr("class", "arc")
-            .attr("d", arc)
-            .attr("fill", (d, i) => {
-                switch (i) {
-                    case 0:
-                        return "#1f77b4";
-                    case 1:
-                        return "#ff7f0e";
-                    case 2:
-                        return "#2ca02c";
-                    default:
-                        return "#d62728";
+        var option = {
+            legend: {
+                data: ['左侧样本总量', '右侧样本总量'],
+                orient: 'horizontal',
+                itemHeight: 20,
+                itemWidth: 40,
+                left: '30%',
+                top: '8%',
+                textStyle: {
+                    fontSize: 16,
                 }
-            })
-            .attr("stroke", "#fff")      // 添加 stroke 属性
-            .attr("stroke-width", 1.5);   // 添加 stroke-width 属性
+            },
+            // 设置图表的位置
+            grid: {
+                bottom: '8%',
+                left: '6%',
+                right: '6%',
+                top: '12%',
+                containLabel: true,
+            },
+            // X轴
+            xAxis: {
+                type: 'value', // 坐标轴类型,   'value' 数值轴，适用于连续数据
+                // 坐标轴刻度
+                axisTick: {
+                    show: false // 是否显示坐标轴刻度 默认显示
+                },
+                // 坐标轴轴线
+                axisLine: { // 是否显示坐标轴轴线 默认显示
+                    show: false // 是否显示坐标轴轴线 默认显示
+                },
+                // 坐标轴在图表区域中的分隔线
+                splitLine: {
+                    show: false // 是否显示分隔线。默认数值轴显示
+                },
+                // 坐标轴刻度标签
+                axisLabel: {
+                    show: false // 是否显示刻度标签 默认显示
+                }
+            },
+            // Y轴
+            yAxis: [
+                // 左侧Y轴
+                {
+                    // 坐标轴类型,  'category' 类目轴，适用于离散的类目数据
+                    // 为该类型时必须通过 data 设置类目数据
+                    type: 'category',
+                    // 坐标轴刻度
+                    axisTick: {
+                        show: false // 是否显示坐标轴刻度 默认显示
+                    },
+                    // 坐标轴轴线
+                    axisLine: { // 是否显示坐标轴轴线 默认显示
+                        show: false, // 是否显示坐标轴轴线 默认显示
+                        lineStyle: { // 坐标轴线线的颜色
+                            color: '#cdd3ee'
+                        }
+                    },
+                    // 坐标轴在图表区域中的分隔线
+                    splitLine: {
+                        show: false // 是否显示分隔线。默认数值轴显示
+                    },
+                    // 坐标轴刻度标签
+                    axisLabel: {
+                        show: true, // 是否显示刻度标签 默认显示
+                        fontSize: 16, // 文字的字体大小
+                        color: '#333', // 刻度标签文字的颜色
+                        // 使用字符串模板，模板变量为刻度默认标签 {value}
+                        formatter: '{value}'
+                    },
+                    // 类目数据，在类目轴（type: 'category'）中有效
+                    data: data.title,
+                    inverse: true,
+                }
+            ],
+            // 系列列表
+            series: [
+                {
+                    type: 'bar', // 系列类型
+                    name: '左侧样本总量', // 系列名称, 用于tooltip的显示, legend 的图例筛选
+                    // 数据堆叠，同个类目轴上系列配置相同的stack值后，后一个系列的值会在前一个系列的值上相加
+                    stack: '总量',
+                    barMaxWidth: 30, // 柱条的最大宽度，不设时自适应
+                    // 图形上的文本标签
+                    label: {
+                        show: true,
+                        position: 'inside',
+                        formatter: function (params) {
+                            if (params.value > 0) {
+                                var res = params.value;
+                                return res;
+                            } else {
+                                return '';
+                            }
+                        },
+                        // formatter: '{c}%',
+                        textStyle: {
+                            fontSize: 16,
+                            fontWeight: 'bolder',
+                            color: '#fff',
+                        }
+                    },
+                    // 图形样式
+                    itemStyle: {
+                        //   borderWidth: 5,
+                        //   borderColor: "#baeee3",
+                        color: '#1ec6a3',
+                    },
+                    data: data.leftData, // 系列中的数据内容数组
+                },
+                // 柱体阴影
+                {
+                    type: 'bar',
+                    stack: '一个',
+                    barWidth: 3,
+                    itemStyle: {
+                        normal: {
+                            color: new echarts.graphic.LinearGradient(0, 2, 0, 0, [
+                                {
+                                    offset: 0,
+                                    color: "#1ec8a5" // 0% 处的颜色
+                                },
+                                {
+                                    offset: 0.5,
+                                    color: "#9ab9b2" // 0% 处的颜色
+                                },
+                                {
+                                    offset: 1,
+                                    color: "#eaeaea" // 100% 处的颜色
+                                }
+                            ], false)
+                        }
+                    },
+                    barGap: 0,
+                    data: data.leftData.map(item => item)
+                },
+                {
+                    type: 'bar', // 系列类型
+                    name: '右侧样本总量', // 系列名称, 用于tooltip的显示, legend 的图例筛选
+                    // 数据堆叠，同个类目轴上系列配置相同的stack值后，后一个系列的值会在前一个系列的值上相加
+                    stack: '总量',
+                    barMaxWidth: 30, // 柱条的最大宽度，不设时自适应
+                    // 图形上的文本标签
+                    label: {
+                        show: true,
+                        position: 'inside',
+                        formatter: function (params) {
+                            if (params.value > 0) {
+                                var res = params.value;
+                                return res;
+                            } else {
+                                return '';
+                            }
+                        },
+                        // formatter: '{c}%',
+                        textStyle: {
+                            fontSize: 16,
+                            fontWeight: 'bolder',
+                            color: '#fff',
+                        }
+                    },
+                    // 图形样式
+                    itemStyle: {
+                        color: '#eb6776',
+                    },
 
-        node.append("circle")
-            .attr("r", 22)
-            .attr("stroke", "fff")
-            .attr("stroke-width", 2)
-            .attr("fill", "none")
-            .attr("cx", 0)
-            .attr("cy", 0);
-
-        // Define the click event handler
-        var selectedNode = null;
-
-        function handleClick (d, i) {
-            // 在控制台中打印出节点信息
-            console.log("Clicked node " + i + ": " + JSON.stringify(d));
-            // Save the selected node
-            selectedNode = d3.select(this);
-            console.log(selectedNode);
-
-            // Reset the border style of all nodes
-            node.selectAll("circle")
-                .attr("stroke-width", 2)
-                .attr("stroke", "#fff");
-
-            // Update the border style of the clicked node
-            selectedNode.select("circle")
-                .attr("stroke-width", 3)
-                .attr("stroke", "red");
-
-            // 将ID为2的节点设为选中状态，更改其颜色
-            d3.selectAll(".node")
-                .filter((d, i) => i === 2)
-                .select("circle")
-                .attr("stroke", "green");
+                    data: data.rightData // 系列中的数据内容数组
+                },
+                {
+                    type: 'bar',
+                    barWidth: 3,
+                    stack: '一个',
+                    itemStyle: {
+                        normal: {
+                            color: new echarts.graphic.LinearGradient(0, 2, 0, 0, [
+                                {
+                                    offset: 0,
+                                    color: "#f86d7d" // 0% 处的颜色
+                                },
+                                {
+                                    offset: 0.5,
+                                    color: "#b18187" // 0% 处的颜色
+                                },
+                                {
+                                    offset: 1,
+                                    color: "#ebebeb" // 100% 处的颜色
+                                }
+                            ], false)
+                        }
+                    },
+                    barGap: 0,
+                    data: data.rightData.map(item => item)
+                },
+            ]
 
         }
 
-
-        // Add the id labels to the nodes
-        node.append("text")
-            .attr("class", "id-label")
-            .text(d => d.id);
-
-        // Update the positions of the links and nodes
-        simulation.on("tick", () => {
-            link
-                .attr("x1", d => d.source.x)
-                .attr("y1", d => d.source.y)
-                .attr("x2", d => d.target.x)
-                .attr("y2", d => d.target.y);
-
-            node
-                .attr("transform", d => `translate(${d.x},${d.y})`);
-        });
-
-        // Functions for dragging the nodes
-        function dragstarted (d) {
-            if (!d3.event.active) simulation.alphaTarget(0.3).restart();
-            d.fx = d.x;
-            d.fy = d.y;
-        }
-
-        function dragged (d) {
-            d.fx = Math.max(8, Math.min(952, d3.event.x));
-            d.fy = Math.max(8, Math.min(592, d3.event.y));
-        }
-
-        function dragended (d) {
-            if (!d3.event.active) simulation.alphaTarget(0);
-            d.fx = null;
-            d.fy = null;
-        }
-
-        // Functions for showing and hiding the id labels on hover
-        function showIdLabel (d) {
-            d3.select(this).selectAll(".id-label").classed("show", true);
-        }
-
-        function hideIdLabel (d) {
-            d3.select(this).selectAll(".id-label").classed("show", false);
-        }
-
+        // 使用配置项显示图表
+        chart.setOption(option);
     </script>
 </body>
 

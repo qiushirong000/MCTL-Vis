@@ -80,8 +80,8 @@ export default {
             if (this.count > 0) {
                 this.comName = 'nodeGraphGates';
             } else {
-                this.comName = 'nodeGraphSingle';
-                // this.comName = 'pieGraph';
+                // this.comName = 'nodeGraphSingle';
+                this.comName = 'pieGraph';
             }
             // console.log('change mode ... ' + this.comName);
             store.SwitchMapperViewEvent();
@@ -92,7 +92,7 @@ export default {
 </script>
 <style scoped>
     .instance {
-        border: 1px solid rgb(0, 0, 0);
+        border: 1px solid rgba(197, 197, 197, 0.336);
         width: 100%;
         height: 30vh;
     }

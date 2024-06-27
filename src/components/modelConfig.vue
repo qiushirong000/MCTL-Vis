@@ -14,13 +14,18 @@
             <el-descriptions-item label="Layer" labelStyle=" text-align: center;background-color: #F8F8FF; color: black; width:40%; font-size:xx-small;" contentStyle="padding-left: 2em">
                 <label style="margin-top: -5%; height: 30px;font-weight: bold; padding-left: 1em;font-size:xx-small;">{{selectedlayer}}</label>
             </el-descriptions-item>
-            <el-descriptions-item label="Neurons" labelStyle=" text-align: center;background-color: #F8F8FF; font-weight: bold; color: black; width:40%;font-size:xx-small;" contentStyle="padding-left: 2.8em; width:60%">
+            <!-- <el-descriptions-item label="Neurons" labelStyle=" text-align: center;background-color: #F8F8FF; font-weight: bold; color: black; width:40%;font-size:xx-small;" contentStyle="padding-left: 2.8em; width:60%">
                 <div class="data-container">
                     <label class="expend-label">{{ selectedNeurons }}</label>
                 </div>
-            </el-descriptions-item>
+            </el-descriptions-item> -->
         </el-descriptions>
-      <div class="chart" ref="chart"></div>
+        <el-row>
+            <div class="chart" ref="chart"></div>
+        </el-row>
+        <div id="chart-container">
+            <div class="minichart" ref="miniChart"></div>
+        </div>
     </div>
 
 </template>
@@ -49,9 +54,10 @@ export default {
         return {
             myChart: null,
             layersName: ['Input Layer', 'Attention Layer', 'Hidden Layer 1', 'Hidden Layer 2', 'Output Layer'],
-            selectedlayer: 'Second Layer',
+            selectedlayer: 'First Layer',
             selectedNeurons: '',
-            LayerColor: ['LightGray', '#FFD700']
+            LayerColor: ['#FFD700', 'LightGray'],
+            miniChart: null
         };
     },
     created () {
@@ -70,28 +76,114 @@ export default {
     mounted () {
         // 设置视图高度
         this.$refs.subcontainer.style.height = this.height + 'vh';
-        this.$refs.chart.style.height = this.showHeader ? (this.height - 19) + 'vh' : this.height + 'vh';
+        this.$refs.chart.style.height = this.showHeader ? (this.height - 26) + 'vh' : this.height + 'vh';
         // 绘制视图
         this.drawView();
+        this.drawNeurons();
     },
     methods: {
+        drawNeurons () {
+            if (this.$refs.miniChart === undefined) return;
+            if (this.miniChart === null) { this.miniChart = this.$echarts.init(this.$refs.miniChart); }
+            // 绘制5x20的热力图
+            let data = [];
+            for (var i = 0; i < 100; i++) {
+                var row = Math.floor(i / 20);
+                var col = i % 20;
+                data.push([col, row, i]);
+            }
+            let option = {
+                tooltip: {
+                    position: 'top'
+                },
+                grid: {
+                    height: '70%',
+                    top: '10%',
+                    left: '0%',
+                    width: '100%'
+                },
+                xAxis: {
+                    type: 'category',
+                    show: false,
+                    splitArea: {
+                        show: false
+                    }
+                },
+                yAxis: {
+                    type: 'category',
+                    show: false,
+                    splitArea: {
+                        show: false
+                    }
+                },
+                visualMap: {
+                    min: 0,
+                    max: 0,
+                    calculable: false,
+                    orient: 'horizontal',
+                    left: 'center',
+                    inRange: {
+                        opacity: [1, 1]
+                    },
+                    show: false,
+                    bottom: '15%'
+                },
+                series: [
+                    {
+                        type: 'heatmap',
+                        data: data,
+                        label: {
+                            show: true,
+                            color: 'white',
+                            formatter: '{@[2]}' // 显示热力图单元格内的文字
+                        },
+                        itemStyle: {
+                            color: 'grey',
+                            borderColor: 'white',
+                            borderWidth: 1.5
+
+                        }
+                    }
+                ]
+            };
+            option && this.miniChart.setOption(option);
+            // 添加点击事件监听器
+            this.miniChart.on('click', params => {
+                const dataIndex = params.dataIndex;
+                const seriesIndex = params.seriesIndex;
+                // 更新被点击的单元格样式为红色
+                option.series[seriesIndex].data[dataIndex] = {
+                    value: JSON.parse(JSON.stringify(option.series[seriesIndex].data[dataIndex])),
+                    itemStyle: {
+                        color: 'red'
+                    }
+                };
+
+                this.miniChart.setOption(option);
+            });
+        },
         drawView () {
             if (this.$refs.chart === undefined) return;
             if (this.myChart === null) { this.myChart = this.$echarts.init(this.$refs.chart); }
             // 设置图表配置项
             let option = {
-                series: [{
-                    type: 'tree',
+                grid: {
                     left: '10%',
                     right: '14%',
                     top: '8%',
+                    bottom: '14%'
+                },
+                series: [{
+                    type: 'tree',
                     roam: true,
                     edgeShape: 'polyline',
                     data: [{
                         name: 'Model',
                         symbolSize: [50, 20],
+                        collapsed: false,
                         children: [{
                             name: 'Input Layer',
+                            collapsed: false,
                             children: [{
                                 name: 'X1'
                             }, {
@@ -107,7 +199,8 @@ export default {
                             name: 'Attention Layer',
                             symbolSize: [90, 20]
                         }, {
-                            name: 'LSTM Layer',
+                            name: 'LSTM Layer 1',
+                            symbolSize: [80, 20],
                             itemStyle: {
                                 color: this.LayerColor[0]
                             },
@@ -121,7 +214,8 @@ export default {
                                 name: 'Output Gate'
                             }]
                         }, {
-                            name: 'LSTM Layer',
+                            name: 'LSTM Layer 2',
+                            symbolSize: [80, 20],
                             itemStyle: {
                                 color: this.LayerColor[1]
                             },
@@ -136,6 +230,7 @@ export default {
                             }]
                         }, {
                             name: 'Output Layer',
+                            collapsed: false,
                             children: [{
                                 name: 'Y1'
                             }]
@@ -200,21 +295,34 @@ export default {
 </script>
 <style scoped>
     .instance {
-        border: 1px solid rgb(0, 0, 0);
+        border: 1px solid rgba(197, 197, 197, 0.336);
         width: 100%;
         height: 30vh;
     }
     .chart {
-        border: 1px solid gainsboro;
+        /* border: 1px solid rgb(238, 8, 8); */
         width: 100%;
         height: 27vh;
     }
+    #chart-container {
+      width: 95%;
+      margin-left: 2.5%;
+      height: 16vh;
+      overflow-x: scroll;
+      overflow-y: hidden;
+    }
+    .minichart {
+        /* border: 1px solid rgb(23, 204, 7); */
+        width: 200%;
+        height: 16vh;
+        /* overflow-x: none; overflow-y: hidden; */
+    }
+
     .data-container {
         width: 80%;  /* 设置容器的宽度 */
         height: 40px;  /* 设置容器的高度 */
         border: 1px solid rgb(0, 0, 0);
         overflow: auto;  /* 设置容器溢出时显示滚动条 */
-
     }
     .expend-label{
         margin-top: 3%;

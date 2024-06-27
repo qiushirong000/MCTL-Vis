@@ -1,14 +1,23 @@
 <template>
     <div class="instance" ref="subcontainer">
-      <el-header style="height:2vh; background-color: gainsboro;" v-if="showHeader">
-        <el-row style="border: 0px solid #73ad21; height:100%;">
-            <el-col :span="24">
-              <div style="margin-top:4px; text-align: left; padding-left: 2em;"><label style="font-weight: bold; font-size: 15px;">{{title}}</label></div>
+        <el-header style="height:2vh; background-color: gainsboro;" v-if="showHeader">
+            <el-row style="border: 0px solid #73ad21; height:100%;">
+                <el-col :span="24">
+                <div style="margin-top:4px; text-align: left; padding-left: 2em;"><label style="font-weight: bold; font-size: 15px;">{{title}}</label></div>
 
+                </el-col>
+            </el-row>
+        </el-header>
+        <el-row style="border: 0px solid #73ad21; height:100%;">
+            <el-col :span="18">
+                <div class="chart" ref="chart"></div>
+            </el-col>
+            <el-col :span="6">
+                <div class="chart" ref="miniChart1" style="border: 0px solid gainsboro; height: 12vh; margin-top: 0%;"></div>
+                <div class="chart" ref="miniChart2" style="border: 0px solid gainsboro; height: 12vh;"></div>
             </el-col>
         </el-row>
-      </el-header>
-      <div class="chart" ref="chart"></div>
+
     </div>
 
 </template>
@@ -43,7 +52,9 @@ export default {
             myChart: null,
             selectData: null,
             innerTD: [0, 0, 0, 0, 0],
-            innerSD: [0, 0, 0, 0, 0]
+            innerSD: [0, 0, 0, 0, 0],
+            miniChart1: null,
+            miniChart2: null
         };
     },
     created () {
@@ -155,6 +166,8 @@ export default {
             let colorsT = [];
             // this.sourceBarData = [33.4, 23.4, 25.8, 33.0, 16];
             // this.targetBarData = [35, 24, 26, 34.5, 16.3];
+            // this.innerSD = [33.4, 23.4, 25.8, 33.0, 16];
+            // this.innerTD = [35, 24, 26, 34.5, 16.3];
             for (let i = 0; i < this.xAxisLabel.length; i++) {
                 colorsS.push({
                     type: 'linear',
@@ -223,9 +236,9 @@ export default {
                 },
                 grid: {
                     top: '20%',
-                    bottom: '20%',
-                    width: '80%',
-                    left: '10%'
+                    bottom: '15%',
+                    width: '85%',
+                    left: '15%'
                 },
                 legend: {
                     data: [{
@@ -274,13 +287,88 @@ export default {
             };
 
             option && this.myChart.setOption(option);
+
+            this.drawPieChart1();
+            this.drawPieChart2();
+        },
+
+        drawPieChart1 () {
+            if (this.$refs.chart === undefined) return;
+            if (this.miniChart1 === null) { this.miniChart1 = this.$echarts.init(this.$refs.miniChart1); }
+
+            let option = {
+                series: [
+                    {
+                        name: 'Access From',
+                        type: 'pie',
+                        radius: '50%',
+                        data: [
+                            { value: this.innerSD[0], name: 'X1' },
+                            { value: this.innerSD[1], name: 'X2' },
+                            { value: this.innerSD[2], name: 'X3' },
+                            { value: this.innerSD[3], name: 'X4' },
+                            { value: this.innerSD[4], name: 'X5' }
+                        ],
+                        label: {
+                            show: false
+                        },
+                        emphasis: {
+                            itemStyle: {
+                                shadowBlur: 10,
+                                shadowOffsetX: 0,
+                                shadowColor: 'rgba(0, 0, 0, 0.5)'
+                            }
+                        }
+                    }
+                ]
+            };
+            option && this.miniChart1.setOption(option);
+        },
+        drawPieChart2 () {
+            if (this.$refs.chart === undefined) return;
+            if (this.miniChart2 === null) { this.miniChart2 = this.$echarts.init(this.$refs.miniChart2); }
+
+            let option = {
+                grid: {
+                    top: '20%',
+                    bottom: '20%',
+                    width: '85%',
+                    left: '10%'
+                },
+                series: [
+                    {
+                        name: 'Access From',
+                        type: 'pie',
+                        radius: '50%',
+                        data: [
+                            { value: this.innerTD[0], name: 'X1' },
+                            { value: this.innerTD[1], name: 'X2' },
+                            { value: this.innerTD[2], name: 'X3' },
+                            { value: this.innerTD[3], name: 'X4' },
+                            { value: this.innerTD[4], name: 'X5' }
+                        ],
+                        label: {
+                            show: false
+                        },
+                        emphasis: {
+                            itemStyle: {
+                                shadowBlur: 10,
+                                shadowOffsetX: 0,
+                                shadowColor: 'rgba(0, 0, 0, 0.5)'
+                            }
+                        }
+                    }
+                ]
+            };
+            option && this.miniChart2.setOption(option);
         }
+
     }
 };
 </script>
 <style scoped>
     .instance {
-        border: 1px solid rgb(0, 0, 0);
+        border: 1px solid rgba(197, 197, 197, 0.336);
         width: 100%;
         height: 30vh;
     }

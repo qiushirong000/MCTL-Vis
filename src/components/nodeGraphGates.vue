@@ -74,7 +74,7 @@ export default {
 </script>
 <style scoped>
     .instance {
-        border: 1px solid rgb(0, 0, 0);
+        /* border: 1px solid rgb(0, 0, 0); */
         width: 100%;
         height: 30vh;
     }

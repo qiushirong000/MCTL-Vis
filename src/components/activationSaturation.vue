@@ -84,8 +84,8 @@ export default {
                     itemStyle: {
                         color: 'steelblue'
                     },
-                    data: [1.26, 0.63, 0.42, 0.23, 0.16, 0.34, 0.22, 0.63, 0.73, 1.26],
-                    // data: [0, 0.14, 0.32, 0.59, 1.45, 0.54, 0.48, 0.13, 0, 0],
+                    // data: [1.26, 0.63, 0.42, 0.23, 0.16, 0.34, 0.22, 0.63, 0.73, 1.26],
+                    data: [0, 0.14, 0.32, 0.59, 1.45, 0.54, 0.48, 0.13, 0, 0],
                     barCategoryGap: 1
                 }]
             };
@@ -97,7 +97,7 @@ export default {
 </script>
 <style scoped>
     .instance {
-        border: 1px solid rgb(0, 0, 0);
+        border: 1px solid rgba(197, 197, 197, 0.336);
         width: 100%;
         height: 30vh;
     }

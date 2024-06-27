@@ -5,7 +5,7 @@ import { eventBus, EVENTS } from './MessageCenter.js';
 export const store = new Vue({
     data: {
         checkedIds: [true, true, true, true, true, true, true, true, true, true],
-        labels: ['NOxCAL', 'AirVol', 'Ammonia-A', 'Ammonia-B', '02'],
+        labels: ['NOxCAL', 'AirVol', 'Ammonia-A', 'Ammonia-B', 'O2'],
         conditionNum: 10, // 工况总数
         conditionS: 7, // 源工况
         conditionT: 9, // 目标工况
@@ -16,9 +16,12 @@ export const store = new Vue({
         weightGraphS: null, // 源权重图数据
         weightGraphT: null, // 目标权重图数据
         nodeColerValue: null, // 节点颜色值
+        filePath: 'transfer_sample'
+        // filePath: 'D4_to_D5_layer1'
         // filePath: 'D1_to_D7_layer1'
         // filePath: 'D7_to_D4_layer1'
-        filePath: 'D7_to_D1_layer2'
+        // filePath: 'D7_to_D1_layer2'
+        // filePath: 'D5_to_D7_layer1'
     },
     methods: {
         updateCheckedIds (data) {

@@ -155,11 +155,11 @@ export default {
             // console.log('draw nodes: ', this.rawData['nodes']);
             if (store.readWeightGraphT() === null) return;
             if (store.readWeightGraphS() === null) return;
-            let changeWeight = this.subtractMatrices(store.readWeightGraphT()['input_gate'], store.readWeightGraphS()['input_gate']);
+            // let changeWeight = this.subtractMatrices(store.readWeightGraphT()['input_gate'], store.readWeightGraphS()['input_gate']);
 
             // console.log('changeWeight 1: ', store.readWeightGraphT()['input_gate']);
             // console.log('changeWeight 2: ', store.readWeightGraphS()['input_gate']);
-            console.log('changeWeight: ', changeWeight);
+            // console.log('changeWeight: ', changeWeight);
 
             this.node_labels = [];
             for (let key in this.rawData['nodes']) {
@@ -168,6 +168,7 @@ export default {
                     name: this.rawData['nodes'][key].toString(),
                     itemStyle: {
                         color: 'steelblue'
+                        // color: 'black'
                         // color: this.getRandomGradientColor()
                     },
                     symbolSize: this.nodeBaseSize + this.nodeStepSize * this.rawData['nodes'][key].length
@@ -278,12 +279,12 @@ export default {
 </script>
 <style scoped>
     .instance {
-        border: 1px solid rgb(0, 0, 0);
+        border: 1px solid rgba(150, 148, 148, 0.336);
         width: 100%;
         height: 30vh;
     }
     .chart {
-        border: 1px solid gainsboro;
+        /* border: 1px solid gainsboro; */
         width: 100%;
         height: 27vh;
     }
